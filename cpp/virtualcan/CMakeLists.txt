@@ -21,6 +21,8 @@ target_sources(virtualcan
     PUBLIC
     FILE_SET HEADERS FILES
         can_connection.h
+        can_interface.h
+        can_message.h
 )
 
 if (WIN32)
@@ -30,11 +32,22 @@ if (WIN32)
     )
 endif()
 
+install(TARGETS virtualcan
+    EXPORT virtualcanTargets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    FILE_SET HEADERS DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+install(EXPORT virtualcanTargets
+    FILE virtualcanTargets.cmake
+    NAMESPACE virtualcan::
+    DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/virtualcan"
+)
 
 include(CMakePackageConfigHelpers)
 configure_package_config_file(cmake/virtualcanConfig.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/virtualcanConfig.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/virtualcan
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/virtualcan
 )
 
 write_basic_package_version_file(
@@ -45,9 +58,7 @@ write_basic_package_version_file(
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/virtualcanConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/virtualcanConfigVersion.cmake
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/virtualcan
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/virtualcan
 )
 
-install(TARGETS virtualcan
-        FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
-)
+
