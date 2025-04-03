@@ -27,7 +27,7 @@ jobs:
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           
     - name: Build
-      run: cargo build --verbose
+      run: cargo build --verbose --manifest-path rust/Cargo.toml
 
     - name: List Files
       run: ls -R
