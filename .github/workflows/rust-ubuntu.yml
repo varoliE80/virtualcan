@@ -27,10 +27,7 @@ jobs:
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           
     - name: Build
-      run: cargo build --verbose --manifest-path rust/Cargo.toml --release
-
-    - name: List Files
-      run: ls -R
+      run: cargo build --manifest-path rust/Cargo.toml --release
 
     - name: Upload release artifact
       uses: actions/upload-artifact@v4
