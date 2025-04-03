@@ -27,7 +27,7 @@ jobs:
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           
     - name: Build
-      run: cargo build --verbose --manifest-path rust/Cargo.toml
+      run: cargo build --verbose --manifest-path rust/Cargo.toml --release
 
     - name: List Files
       run: ls -R
@@ -36,4 +36,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: virtualcanServer
-        path: target/${{ matrix.BUILD_TARGET }}/<my-app>
+        path: ${{ github.workspace }}/rust/target/release/virtualcan
