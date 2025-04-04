@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.20.0)
 project(virtualcan VERSION 0.1.0 LANGUAGES C CXX)
 
+option(VC_BUILD_SHARED "Build the c++ client as a shared library" ON)
 
 if (WIN32)
     set(CONNECTION_IMPLEMENTATION_SRC winsock2_connection.cpp)
@@ -8,8 +9,12 @@ else()
     set(CONNECTION_IMPLEMENTATION_SRC unix_connection.cpp)
 endif()
 
+if(VC_BUILD_SHARED)
+    add_library(virtualcan STATIC)
+else()
+    add_library(virtualcan STATIC)
+endif()
 
-add_library(virtualcan SHARED)
 target_sources(virtualcan
     PRIVATE
         base_connection.cpp
